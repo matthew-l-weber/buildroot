@@ -1,3 +1,4 @@
 #!/bin/sh
 
-modprobe g_acm_ms file=/dev/mmcblk0
+#modprobe g_acm_ms file=/dev/mmcblk0
+modprobe g_multi file=/dev/mmcblk0
