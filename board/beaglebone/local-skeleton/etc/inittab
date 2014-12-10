@@ -15,7 +15,7 @@
 
 # Startup the system
 null::sysinit:/bin/mount -t proc proc /proc
-null::sysinit:/bin/mount -o remount,rw /
+null::sysinit:/bin/mount -o remount,ro /
 null::sysinit:/bin/mkdir -p /dev/pts
 null::sysinit:/bin/mkdir -p /dev/shm
 null::sysinit:/bin/mount -a
@@ -25,7 +25,7 @@ null::sysinit:/bin/hostname -F /etc/hostname
 
 # Put a getty on the serial port
 ttyO0::respawn:/sbin/getty -L  ttyO0 115200 vt100 # GENERIC_SERIAL
-ttyGS0::respawn:/sbin/getty -L ttyGS0 115200 linux
+#ttyGS0::respawn:/sbin/getty -L ttyGS0 115200 linux
 
 # Stuff to do for the 3-finger salute
 ::ctrlaltdel:/sbin/reboot
