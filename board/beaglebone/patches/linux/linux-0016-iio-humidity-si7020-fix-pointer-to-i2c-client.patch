@@ -1,0 +1,33 @@
+From e0922e5e3ccb78aa0152e93dfbd1755ac39c8582 Mon Sep 17 00:00:00 2001
+From: Hartmut Knaack <knaack.h@gmx.de>
+Date: Sat, 25 Oct 2014 20:09:06 +0200
+Subject: iio:humidity:si7020: fix pointer to i2c client
+
+In si7020_read_raw() the pointer to the i2c client was obtained as second level
+pointer, although a simple pointer is appropriate.
+
+Signed-off-by: Hartmut Knaack <knaack.h@gmx.de>
+Signed-off-by: Jonathan Cameron <jic23@kernel.org>
+
+diff --git a/drivers/iio/humidity/si7020.c b/drivers/iio/humidity/si7020.c
+index 69e49f5..b541646 100644
+--- a/drivers/iio/humidity/si7020.c
++++ b/drivers/iio/humidity/si7020.c
+@@ -45,12 +45,12 @@ static int si7020_read_raw(struct iio_dev *indio_dev,
+ 			   struct iio_chan_spec const *chan, int *val,
+ 			   int *val2, long mask)
+ {
+-	struct i2c_client **client = iio_priv(indio_dev);
++	struct i2c_client *client = iio_priv(indio_dev);
+ 	int ret;
+ 
+ 	switch (mask) {
+ 	case IIO_CHAN_INFO_RAW:
+-		ret = i2c_smbus_read_word_data(*client,
++		ret = i2c_smbus_read_word_data(client,
+ 					       chan->type == IIO_TEMP ?
+ 					       SI7020CMD_TEMP_HOLD :
+ 					       SI7020CMD_RH_HOLD);
+-- 
+cgit v0.10.1
+
