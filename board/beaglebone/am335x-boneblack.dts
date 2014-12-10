@@ -53,24 +53,40 @@
 			0xe4 0x00       /* lcd_hsync.lcd_hsync, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT */
 			0xe8 0x00       /* lcd_pclk.lcd_pclk, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT */
 			0xec 0x00       /* lcd_ac_bias_en.lcd_ac_bias_en, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT */
+                    /***** P8 *****/
+                    0x090 0x0f  /* Right btn (in,  mode 7) */
+                    0x094 0x0f  /* dig therm (in,  mode 7) */
+                    0x09c 0x0f  /* Left btn  (in,  mode 7) */
+                    0x098 0x0f  /* Down btn  (in,  mode 7) */
+                    0x034 0x0f  /* up btn    (in,  mode 7) */
+                    0x030 0x0f  /* a btn     (in,  mode 7) */
+                    0x024 0x2f  /* Cool S    (out, mode 7) */
+                    0x028 0x2f  /* cool r    (out, mode 7) */
+                    0x03c 0x2f  /* fan r     (out, mode 7) */
+                    0x038 0x2f  /* fan s     (out, mode 7) */
+                    0x02c 0x2f  /* head r    (out, mode 7) */
+                    0x08c 0x2f  /* head s    (out, mode 7) */
+                    /***** P9 *****/
+                    /* i2c2 scl */
+                    /* i2c2 sda */
+                    0x154 0x0f  /* encode b  (in,  mode 7) */
+                    0x150 0x0f  /* rfm_int   (in,  mode 7) */
+                    0x044 0x2f  /* led r     (out, mode 7) */
+                    /* uart tx */
+                    0x1ac 0x2f  /* led g     (out, mode 7) */
+                    /* uart rx */
+                    0x1a4 0x2f  /* led b     (out, mode 7) */
+                    /* spi.... */
+                    /* adc .... */
+                    0x1a8 0x0f  /* encode a  (in,  mode 7) */
+                    0x1b4 0x0f
+                    0x1a0 0x0f  /* encode sw (in,  mode 7) */
+                    0x164 0x0f
 		>;
 	};
 	nxp_hdmi_bonelt_off_pins: nxp_hdmi_bonelt_off_pins {
 		pinctrl-single,pins = <
 			0x1b0 0x03      /* xdma_event_intr0, OMAP_MUX_MODE3 | AM33XX_PIN_OUTPUT */
-		>;
-	};
-	cape_pins: cape_pins_s0 {
-		pinctrl-single,pins = <
-                    /* P8 */
-                    0x090 0xf
-                    0x094 0xf
-                    0x09c 0xf
-                    0x098 0xf
-                    0x024 0x27
-                    /* P9 */
-                    0x154 0xf
-                    0x150 0xf
 		>;
 	};
 };
@@ -80,6 +96,23 @@
 	      compatible = "nxp,tda998x";
 	      reg = <0x70>;
 	};
+};
+
+&i2c2 {
+
+	/* temp and humidity sensor */
+
+
+	at24@57 {
+	      compatible = "at24,24c256";
+	      reg = <0x57>;
+	};
+};
+
+&uart1 {
+	/*pinctrl-names = "default";
+	pinctrl-0 = <&uart1_pins>;*/
+	status = "okay";
 };
 
 &lcdc {
