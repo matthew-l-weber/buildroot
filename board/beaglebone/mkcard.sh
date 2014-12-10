@@ -20,6 +20,7 @@ fi
 
 DRIVE=$1
 umount $DRIVE*
+sleep 0.5
 
 dd if=/dev/zero of=$DRIVE bs=1024 count=1024
 
@@ -36,7 +37,7 @@ echo ,9,0x0C,*
 echo ,100,,-
 } | sfdisk -D -H 255 -S 63 -C $CYLINDERS $DRIVE
 
-sleep 1
+sleep 0.5
 
 if [ -b ${DRIVE}1 ]; then
 	umount ${DRIVE}1
