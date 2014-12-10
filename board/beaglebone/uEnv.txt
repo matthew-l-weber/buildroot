@@ -1,3 +1,4 @@
 bootpart=0:1
 bootdir=
-uenvcmd=run loadimage;run loadramdisk;run findfdt;run loadfdt;run ramboot
+mmcrootfstype=ext4 rootwait
+uenvcmd=run loaduimage;run loadramdisk;run findfdt;run loadfdt;run ramboot
