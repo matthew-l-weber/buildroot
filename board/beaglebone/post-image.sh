@@ -8,6 +8,8 @@ cp board/beaglebone/mkcard.sh $BINARIES_DIR/
 cp board/beaglebone/loadCard.sh $BINARIES_DIR/
 chmod 700 $BINARIES_DIR/mkcard.sh $BINARIES_DIR/loadCard.sh
 
+rm $BINARIES_DIR/rootfs.tar
+
 # Gen overlays
 #board/beaglebone/dtc -O dtb -o $BINARIES_DIR/v1_bbb_comforStat.dtbo -b O -@ board/beaglebone/v1_bbb_comforStat.dts
 
