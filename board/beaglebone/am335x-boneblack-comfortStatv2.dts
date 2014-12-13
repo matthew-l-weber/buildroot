@@ -71,13 +71,13 @@
                     0x150 0x0f  /* 22 - rfm_int    (in,  mode 7) */
                     /* uart tx */
                     /* uart rx */
-                    0x1a4 0x0f  /* 27 - encode b   (in , mode 7) */
+                    0x1a4 0x31  /* 27 - encode b   (in , mode 1, eQEP0B) */
                     /* spi.... */
                     /* adc .... */
                     0x1a8 0x0f  /* 41 - encode sw  (in,  mode 7) */
-                    0x1b4 0x0f
-                    0x1a0 0x0f  /* 42 - encode a   (in,  mode 7) */
-                    0x164 0x0f
+                    0x1b4 0x0f  /* not used, set in safe input state */
+                    0x1a0 0x31  /* 42 - encode a   (in,  mode 1, eQEP0A) */
+                    0x164 0x0f  /* not used, set in safe input state */
 		>;
 	};
 	nxp_hdmi_bonelt_off_pins: nxp_hdmi_bonelt_off_pins {
@@ -95,10 +95,12 @@
 };
 
 &i2c2 {
-
 	/* temp and humidity sensor */
-
-
+	si7020@40 {
+	      compatible = "si7020,si7020";
+	      reg = <0x40>;
+	};
+	/* eeprom */
 	at24@57 {
 	      compatible = "at24,24c256";
 	      reg = <0x57>;
@@ -108,6 +110,17 @@
 &uart1 {
 	/*pinctrl-names = "default";
 	pinctrl-0 = <&uart1_pins>;*/
+	status = "okay";
+};
+
+&eqep0 {
+	count_mode = <0>; /* 0 - Quadrature mode, normal 90 phase offset cha & chb. */
+			  /* 1 - Direction mode. cha input = clock, chb input = direction */
+	swap_inputs = <0>; /* Are channel A and channel B swapped? (0 - no, 1 - yes) */
+	invert_qa = <0>; /* Should we invert the channel A input? */
+	invert_qb = <0>; /* Should we invert the channel B input? */
+	invert_qi = <0>; /* Should we invert the index input? */
+	invert_qs = <0>; /* Should we invert the strobe input? */
 	status = "okay";
 };
 
