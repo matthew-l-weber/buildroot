@@ -30,72 +30,110 @@
 };
 
 &am33xx_pinmux {
-	nxp_hdmi_bonelt_pins: nxp_hdmi_bonelt_pins {
-		pinctrl-single,pins = <
-			0x1b0 0x03      /* xdma_event_intr0, OMAP_MUX_MODE3 | AM33XX_PIN_OUTPUT */
-			0xa0 0x08       /* lcd_data0.lcd_data0, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xa4 0x08       /* lcd_data1.lcd_data1, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xa8 0x08       /* lcd_data2.lcd_data2, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xac 0x08       /* lcd_data3.lcd_data3, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xb0 0x08       /* lcd_data4.lcd_data4, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xb4 0x08       /* lcd_data5.lcd_data5, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xb8 0x08       /* lcd_data6.lcd_data6, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xbc 0x08       /* lcd_data7.lcd_data7, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xc0 0x08       /* lcd_data8.lcd_data8, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xc4 0x08       /* lcd_data9.lcd_data9, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xc8 0x08       /* lcd_data10.lcd_data10, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xcc 0x08       /* lcd_data11.lcd_data11, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xd0 0x08       /* lcd_data12.lcd_data12, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xd4 0x08       /* lcd_data13.lcd_data13, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xd8 0x08       /* lcd_data14.lcd_data14, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xdc 0x08       /* lcd_data15.lcd_data15, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT | AM33XX_PULL_DISA */
-			0xe0 0x00       /* lcd_vsync.lcd_vsync, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT */
-			0xe4 0x00       /* lcd_hsync.lcd_hsync, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT */
-			0xe8 0x00       /* lcd_pclk.lcd_pclk, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT */
-			0xec 0x00       /* lcd_ac_bias_en.lcd_ac_bias_en, OMAP_MUX_MODE0 | AM33XX_PIN_OUTPUT */
+	cape_v1_gpio_pins: cape_v1_gpio_pins {
+                pinctrl-single,pins = <
                     /***** P8 *****/
-                    0x090 0x2f  /* 7 - led b       (out,  mode 7) */
-                    0x094 0x2f  /* 8 - led r       (out,  mode 7) */
-                    0x09c 0x2f  /* 9 - led g       (out,  mode 7) */
-                    0x098 0x2f  /* 10 - heat cntl  (out,  mode 7) */
-                    0x030 0x2f  /* 12 - cool cntl  (out,  mode 7) */
-                    0x028 0x2f  /* 14 - fan cntl   (out,  mode 7) */
-                    0x038 0x2f  /* 16 - aux cntl   (out,  mode 7) */
-
+                    0x090 0x2f  /* Right btn (in,  mode 7) */
+                    0x094 0x2f  /* dig therm (in,  mode 7) */
+                    0x09c 0x2f  /* Left btn  (in,  mode 7) */
+                    0x098 0x2f  /* Down btn  (in,  mode 7) */
+                    0x034 0x2f  /* up btn    (in,  mode 7) */
+                    0x030 0x2f  /* a btn     (in,  mode 7) */
+                    0x024 0x0f  /* Cool S    (out, mode 7) */
+                    0x028 0x0f  /* cool r    (out, mode 7) */
+                    0x03c 0x0f  /* fan r     (out, mode 7) */
+                    0x038 0x0f  /* fan s     (out, mode 7) */
+                    0x02c 0x0f  /* head r    (out, mode 7) */
+                    0x08c 0x0f  /* head s    (out, mode 7) */
                     /***** P9 *****/
-                    0x04c 0x0f  /* 16 - dig therm  (in,  mode 7) */
-                    0x15c 0x0f  /* 17 - up btn     (in,  mode 7) */
-                    0x158 0x0f  /* 18 - down btn   (in,  mode 7) */
-                    /* i2c2 scl */
-                    /* i2c2 sda */
-                    0x150 0x0f  /* 22 - rfm_int    (in,  mode 7) */
-                    /* uart tx */
-                    /* uart rx */
-                    0x1a4 0x31  /* 27 - encode b   (in , mode 1, eQEP0B) */
+                    0x154 0x2f  /* encode b  (in,  mode 7) */
+                    0x150 0x2f  /* rfm_int   (in,  mode 7) */
+                    0x044 0x0f  /* led r     (out, mode 7) */
+                    0x1ac 0x0f  /* led g     (out, mode 7) */
+                    0x1a4 0x0f  /* led b     (out, mode 7) */
                     /* spi.... */
                     /* adc .... */
-                    0x1a8 0x0f  /* 41 - encode sw  (in,  mode 7) */
-                    0x1b4 0x0f  /* not used, set in safe input state */
-                    0x1a0 0x31  /* 42 - encode a   (in,  mode 1, eQEP0A) */
-                    0x164 0x0f  /* not used, set in safe input state */
+                 /*   0x1a8 0x0f*/  /* encode a  (in,  mode 7) */
+                 /*   0x1b4 0x0f*/
+                 /*   0x1a0 0x0f*/  /* encode sw (in,  mode 7) */
+                 /*   0x164 0x0f*/
+                    0x17c 0x73  /* i2c2 scl */
+                    0x178 0x73  /* i2c2 sda */
+                >;
+        };
+
+	cape_v2_gpio_pins: cape_v2_gpio_pins {
+		pinctrl-single,pins = <
+                    /***** P8 *****/
+                    0x090 0x0f  /* 7 - led b       (out,  mode 7) */
+                    0x094 0x0f  /* 8 - led r       (out,  mode 7) */
+                    0x09c 0x0f  /* 9 - led g       (out,  mode 7) */
+                    0x098 0x0f  /* 10 - heat cntl  (out,  mode 7) */
+                    0x030 0x0f  /* 12 - cool cntl  (out,  mode 7) */
+                    0x028 0x0f  /* 14 - fan cntl   (out,  mode 7) */
+                    0x038 0x0f  /* 16 - aux cntl   (out,  mode 7) */
+
+                    /***** P9 *****/
+                /*    0x04c 0x0f   16 - dig therm  (in,  mode 7) */
+                    0x15c 0x2f  /* 17 - up btn     (in,  mode 7) */
+                    0x158 0x2f  /* 18 - down btn   (in,  mode 7) */
+                    0x150 0x2f  /* 22 - rfm_int    (in,  mode 7) */
+                    /* spi.... */
+                    /* adc .... */
+                    0x1a4 0x31  /* 27 - encode b   (in , mode 1, eQEP0B) */
+                    0x1a8 0x2f  /* 41 - encode sw  (in,  mode 7) */
+                  /*  0x1b4 0x0f   not used, set in safe input state */
+                  /*  0x1a0 0x31   42 - encode a   (in,  mode 1, eQEP0A) */
+                  /*  0x164 0x0f   not used, set in safe input state */
+
+                    0x17c 0x73  /* i2c2 scl */
+                    0x178 0x73  /* i2c2 sda */
 		>;
 	};
-	nxp_hdmi_bonelt_off_pins: nxp_hdmi_bonelt_off_pins {
+	i2c2_pins: i2c2_pins {
 		pinctrl-single,pins = <
-			0x1b0 0x03      /* xdma_event_intr0, OMAP_MUX_MODE3 | AM33XX_PIN_OUTPUT */
+                    0x17c 0x73  /* i2c2 scl */
+                    0x178 0x73  /* i2c2 sda */
+		>;
+	};
+	uart1_pins: uart1_pins {
+		pinctrl-single,pins = <
+                    0x180 0x20  /* uart rx */
+                    0x184 0x00  /* uart tx */
+		>;
+	};
+	/* unused for now, done as a helper block of io */
+	eqep0_pins: eqep0_pins {
+		pinctrl-single,pins = <
+                    0x1a4 0x31  /* 27 - encode b   (in , mode 1, eQEP0B) */
+                    0x1a8 0x2f  /* 41 - encode sw  (in,  mode 7) */
+                    0x1b4 0x2f  /* not used, set in safe input state */
+                    0x1a0 0x31  /* 42 - encode a   (in,  mode 1, eQEP0A) */
+                    0x164 0x2f  /* not used, set in safe input state */
 		>;
 	};
 };
 
-&i2c0 {
-	hdmi1: hdmi@70 {
-	      compatible = "nxp,tda998x";
-	      reg = <0x70>;
+/*&ocp {
+	pinmux_helper_capeio {
+		compatible = "bone-pinmux-helper";
+		status = "okay";
+		pinctrl-names = "default";
+		pinctrl-0 = <&cape_v2_gpio_pins>;
 	};
-};
+};*/
+	/* todo break out common io into peripheral helpers */
 
 &i2c2 {
+	pinctrl-names = "default";
+	/*pinctrl-0 = <&i2c2_pins>;*/
+	pinctrl-0 = <&cape_v2_gpio_pins>;
+	clock-frequency = <100000>;
+	status = "okay";
+	#address-cells = <1>;
+	#size-cells = <0>;
 	/* temp and humidity sensor */
+	/* v2 board only */
 	si7020@40 {
 	      compatible = "si7020,si7020";
 	      reg = <0x40>;
@@ -107,13 +145,18 @@
 	};
 };
 
+/* lcd output */
 &uart1 {
-	/*pinctrl-names = "default";
-	pinctrl-0 = <&uart1_pins>;*/
+	pinctrl-names = "default";
+	pinctrl-0 = <&uart1_pins>;
 	status = "okay";
 };
 
+/* v2 board only */
 &eqep0 {
+/*	pinctrl-names = "default";
+	pinctrl-0 = <&eqep0_pins>;*/
+
 	count_mode = <0>; /* 0 - Quadrature mode, normal 90 phase offset cha & chb. */
 			  /* 1 - Direction mode. cha input = clock, chb input = direction */
 	swap_inputs = <0>; /* Are channel A and channel B swapped? (0 - no, 1 - yes) */
@@ -121,42 +164,5 @@
 	invert_qb = <0>; /* Should we invert the channel B input? */
 	invert_qi = <0>; /* Should we invert the index input? */
 	invert_qs = <0>; /* Should we invert the strobe input? */
-	status = "okay";
+/*	status = "okay";*/
 };
-
-&lcdc {
-	pinctrl-names = "default", "off";
-	pinctrl-0 = <&nxp_hdmi_bonelt_pins>;
-	pinctrl-1 = <&nxp_hdmi_bonelt_off_pins>;
-	status = "okay";
-	hdmi = <&hdmi1>;
-	display-timings {
-		1280x720P60 {
-		   clock-frequency = <74250000>;
-		   hactive = <1280>;
-		   vactive = <720>;
-		   hfront-porch = <110>;
-		   hback-porch = <220>;
-		   hsync-len = <40>;
-		   vback-porch = <5>;
-		   vfront-porch = <20>;
-		   vsync-len = <5>;
-		   hsync-active = <1>;
-		   vsync-active = <1>;
-		};
-		640x480P60 {
-		   clock-frequency = <25200000>;
-		   hactive = <640>;
-		   vactive = <480>;
-		   hfront-porch = <16>;
-		   hback-porch = <48>;
-		   hsync-len = <96>;
-		   vback-porch = <31>;
-		   vfront-porch = <11>;
-		   vsync-len = <2>;
-		   hsync-active = <0>;
-		   vsync-active = <0>;
-		};
-	};
-};
-
