@@ -10,6 +10,7 @@
 /etc/inittab				f	644	0	0	-	-	-	-	-
 /etc/dropbear/dropbear_rsa_host_key	f	600	0	0	-	-	-	-	-
 /etc/init.d/S10musb			f	755	0	0	-	-	-	-	-
+/etc/init.d/S42wpa_supplicant		f	755	0	0	-	-	-	-	-
 /etc/init.d/S90unitTest			f	755	0	0	-	-	-	-	-
 /etc/network/interfaces			f	644	0	0	-	-	-	-	-
 /usr/bin/ro				f	755	0	0	-	-	-	-	-
