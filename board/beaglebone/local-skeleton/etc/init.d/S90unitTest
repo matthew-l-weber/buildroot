@@ -26,7 +26,7 @@ gpioUnExport()
 gpioGetVal()
 {
  echo in > /sys/class/gpio/gpio$1/direction 
- cat /sys/class/gpio/gpio$1/value | xargs
+ cat /sys/class/gpio/gpio$1/value | awk '{ printf "%s", $0 }'
 }
 
 gpioSetVal()
@@ -38,10 +38,10 @@ gpioSetVal()
 log()
 {
  echo $1
- echo -n $1 > /dev/ttyO1
+ echo $1 > /dev/ttyO1
 }
 
-echo "Unit test starting..."
+echo "----[Unit test starting]----"
 
 # Select general cape muxing
 log "Selected[$cape]"
@@ -53,11 +53,11 @@ log "Exporting..."
 if [ "$cape" == "capev2" ];then 
  # P8
  gpioExport 66    # led b - ACTIVE 0
- gpioSetVal 66 1
+ gpioSetVal 66 0
  gpioExport 67    # led r - ACTIVE 0
- gpioSetVal 67 1
+ gpioSetVal 67 0
  gpioExport 69    # led g - ACTIVE 0
- gpioSetVal 69 1
+ gpioSetVal 69 0
  gpioExport 68    # heat  - ACTIVE 1
  gpioSetVal 68 0
  gpioExport 44    # cool  - ACTIVE 1
@@ -75,17 +75,13 @@ if [ "$cape" == "capev2" ];then
 
  # Print current State
  log "IO State"
- echo "Input State"
- echo -n "UP btn    ["
+ echo -n "UP btn["
  gpioGetVal 5
- echo "]"
- echo -n "DOWN btn  ["
+ echo -n "] DOWN btn["
  gpioGetVal 4
- echo "]"
- echo -n "EnSW btn  ["
+ echo -n "] EnSW btn["
  #gpioGetVal 20
- echo "NA]"
- echo -n "RFM irq   ["
+ echo -n "-] RFM irq["
  gpioGetVal 2
  echo "]"
 
@@ -122,8 +118,8 @@ if [ "$cape" == "capev2" ];then
  # add output of spitest tool to RFM
 
  # Not testing the relay control directly (this allows a breakout with everything still configured.
- echo "Hit any key to continue, or ctrl-c out to do relay testing"
- read
+ #echo "Hit any key to continue, or ctrl-c out to do relay testing"
+ #read
 
  # Restore GPIO state
  # P8
@@ -141,5 +137,14 @@ if [ "$cape" == "capev2" ];then
  gpioUnExport 2     # RFM irq
  log "Restored GPIO"
 fi
-
-echo "Unit test finished..."
+echo "----[Unit test finished]----"
+echo .
+echo "----[Steps to use WiFi]----"
+echo "1) Set mmc writeable   --->  rw"
+echo "2) vi /etc/wpa_supplicant.conf   # to have your network info"
+echo "3) vi /etc/init.d/S42wpa_supplicant   # uncomment udhcp line"
+echo "4) Set mmc readonly   --->  ro"
+echo "5) /etc/init.d/S42wpa_supplicant restart"
+echo "6) All power ups will auto connect"
+echo .
+echo .
