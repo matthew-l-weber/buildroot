@@ -1,0 +1,145 @@
+#!/bin/sh
+
+#if [ "x$1" == "x" ]; then
+# exit 1
+#fi
+#[ "$1" == "1" ] && cape="capev1"
+#[ "$1" == "2" ] && cape="capev2"
+
+
+#cat /sys/kernel/debug/pinctrl/44e10800.pinmux/pinmux-*
+#exit
+
+
+cape="capev2"
+
+gpioExport()
+{
+ echo $1 > /sys/class/gpio/export
+}
+
+gpioUnExport()
+{
+ echo $1 > /sys/class/gpio/unexport
+}
+
+gpioGetVal()
+{
+ echo in > /sys/class/gpio/gpio$1/direction 
+ cat /sys/class/gpio/gpio$1/value | xargs
+}
+
+gpioSetVal()
+{
+ echo out > /sys/class/gpio/gpio$1/direction
+ echo $2 > /sys/class/gpio/gpio$1/value
+}
+
+log()
+{
+ echo $1
+ echo -n $1 > /dev/ttyO1
+}
+
+echo "Unit test starting..."
+
+# Select general cape muxing
+log "Selected[$cape]"
+#echo $cape  >/sys/devices/ocp*/pinmux_helper_capeio/state
+
+# TODO only doing for v2 at the moemnt......
+# Enable GPIO we need to test
+log "Exporting..."
+if [ "$cape" == "capev2" ];then 
+ # P8
+ gpioExport 66    # led b - ACTIVE 0
+ gpioSetVal 66 1
+ gpioExport 67    # led r - ACTIVE 0
+ gpioSetVal 67 1
+ gpioExport 69    # led g - ACTIVE 0
+ gpioSetVal 69 1
+ gpioExport 68    # heat  - ACTIVE 1
+ gpioSetVal 68 0
+ gpioExport 44    # cool  - ACTIVE 1
+ gpioSetVal 44 0
+ gpioExport 26    # fan   - ACTIVE 1
+ gpioSetVal 26 0
+ gpioExport 46    # aux   - ACTIVE 1
+ gpioSetVal 46 0
+ # P9
+ gpioExport 51    # dig therm
+ gpioExport 5     # up btn      - ACTIVE 1
+ gpioExport 4     # down btn    - ACTIVE 1
+ gpioExport 2     # RFM irq     - ACTIVE 1
+ log "Exported GPIO"
+
+ # Print current State
+ log "IO State"
+ echo "Input State"
+ echo -n "UP btn    ["
+ gpioGetVal 5
+ echo "]"
+ echo -n "DOWN btn  ["
+ gpioGetVal 4
+ echo "]"
+ echo -n "EnSW btn  ["
+ #gpioGetVal 20
+ echo "NA]"
+ echo -n "RFM irq   ["
+ gpioGetVal 2
+ echo "]"
+
+ # LED tests
+ log "Led Blue On"
+ gpioSetVal 66 1
+ sleep 2
+ gpioSetVal 66 0
+ log "Led Red On"
+ gpioSetVal 67 1
+ sleep 2
+ gpioSetVal 67 0
+ log "Led Green On"
+ gpioSetVal 69 1
+ sleep 2
+ gpioSetVal 69 0
+ log "Leds Off"
+ sleep 1
+
+ log "EEPROM DUMP"
+# i2cdump -f -y 2 0x57
+ i2cget -f -y 2 0x57 0x0
+ i2cget -f -y 2 0x57 0x1
+ i2cget -f -y 2 0x57 0x2
+
+ # Add temp/humidity sensor
+ log "si7020"
+ i2cget -f -y 2 0x40 0x0
+ i2cget -f -y 2 0x40 0x1
+ i2cget -f -y 2 0x40 0x2
+
+ # add Dig temp and analog temp sensor output
+
+ # add output of spitest tool to RFM
+
+ # Not testing the relay control directly (this allows a breakout with everything still configured.
+ echo "Hit any key to continue, or ctrl-c out to do relay testing"
+ read
+
+ # Restore GPIO state
+ # P8
+ gpioUnExport 66    # led b
+ gpioUnExport 67    # led r
+ gpioUnExport 69    # led g
+ gpioUnExport 68    # heat
+ gpioUnExport 44    # cool
+ gpioUnExport 26    # fan
+ gpioUnExport 46    # aux
+ # P9
+ gpioUnExport 51    # dig therm
+ gpioUnExport 5     # up btn
+ gpioUnExport 4     # down btn
+ gpioUnExport 2     # RFM irq
+ log "Restored GPIO"
+fi
+
+echo "Unit test finished..."
