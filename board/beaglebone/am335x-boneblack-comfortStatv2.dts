@@ -80,11 +80,12 @@
                     0x150 0x2f  /* 22 - rfm_int    (in,  mode 7) */
                     /* spi.... */
                     /* adc .... */
-                    0x1a4 0x31  /* 27 - encode b   (in , mode 1, eQEP0B) */
+                    0x1a4 0x2f  /* 27 - encode b   (in , mode 1, eQEP0B) */
+                    /*0x1a4 0x31   27 - encode b   (in , mode 1, eQEP0B) */
                     0x1a8 0x2f  /* 41 - encode sw  (in,  mode 7) */
-                  /*  0x1b4 0x0f   not used, set in safe input state */
-                  /*  0x1a0 0x31   42 - encode a   (in,  mode 1, eQEP0A) */
-                  /*  0x164 0x0f   not used, set in safe input state */
+        /*            0x1b4 0x2f   defaulting to 0x3 - not used, set in safe input state */
+                  /*  0x1a0 0x31 defaulting to 0x37 -  42 - encode a   (in,  mode 1, eQEP0A) */
+                    0x164 0x2f  /* defaulting to 0x27 - not used, set in safe input state */
 
                     0x17c 0x73  /* i2c2 scl */
                     0x178 0x73  /* i2c2 sda */
@@ -111,6 +112,21 @@
                     0x1a0 0x31  /* 42 - encode a   (in,  mode 1, eQEP0A) */
                     0x164 0x2f  /* not used, set in safe input state */
 		>;
+	};
+	w1_gpio_pins: w1_gpio_pinsw1_gpio_pins {
+		pinctrl-single,pins = <
+                    0x04c 0x3F  /* P9-16 - NO OMAP_PIN_INPUT_PULLUP | OMAP_MUX_MODE7 */
+		>;
+	};
+};
+
+&ocp { /* does the ocp in the bone common file need ot be a reference to the dtsi ocp?????? trying to explain can't parse error.... */
+	onewire@0 {
+		compatible = "w1-gpio";
+		pinctrl-names = "default";
+		pinctrl-0 = <&w1_gpio_pins>;
+		status = "okay";
+		gpios = <&gpio1 19 0>; /* P9-16 - gpio1[19] */
 	};
 };
 
@@ -142,6 +158,16 @@
 	at24@57 {
 	      compatible = "at24,24c256";
 	      reg = <0x57>;
+	};
+};
+
+&tscadc {
+	vsense-name = "AIN1";
+        vsense-scale = <4096>;
+	status = "okay";
+
+	adc {
+		ti,adc-channels = <1>;
 	};
 };
 
