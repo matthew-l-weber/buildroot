@@ -1,0 +1,11 @@
+--- a/arch/arm/boot/dts/am335x-bone-common.dtsi	2014-10-09 08:46:37.000000000 -0500
++++ b/arch/arm/boot/dts/am335x-bone-common.dtsi	2014-12-18 13:40:18.389141722 -0600
+@@ -59,7 +59,7 @@
+ 
+ 		clkout2_pin: pinmux_clkout2_pin {
+ 			pinctrl-single,pins = <
+-				0x1b4 (PIN_OUTPUT_PULLDOWN | MUX_MODE3)	/* xdma_event_intr1.clkout2 */
++				0x1b4 (PIN_INPUT | MUX_MODE7)	/* xdma_event_intr1.clkout2 */
+ 			>;
+ 		};
+ 
