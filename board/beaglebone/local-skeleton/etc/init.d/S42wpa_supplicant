@@ -5,6 +5,15 @@ case "$1" in
         echo "Starting wpa_supplicant..."
 	wpa_supplicant -B -i wlan0 -c /etc/wpa_supplicant.conf
 	#udhcpc -i wlan0
+	echo .
+	echo "----[Steps to use WiFi]----"
+	echo "1) Set mmc writeable   --->  rw"
+	echo "2) vi /etc/wpa_supplicant.conf   # to have your network info"
+	echo "3) vi /etc/init.d/S42wpa_supplicant   # uncomment udhcp line"
+	echo "4) Set mmc readonly   --->  ro"
+	echo "5) /etc/init.d/S42wpa_supplicant restart"
+	echo "6) All power ups will auto connect"
+	echo .
         ;;
   stop)
         echo -n "Stopping wpa_supplicant..."
