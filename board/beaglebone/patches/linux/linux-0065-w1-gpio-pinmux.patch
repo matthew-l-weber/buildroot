@@ -1,0 +1,23 @@
+--- a/drivers/w1/masters/w1-gpio.c	2014-10-09 08:46:37.000000000 -0500
++++ b/drivers/w1/masters/w1-gpio.c	2015-01-12 10:53:25.925176078 -0600
+@@ -18,6 +18,7 @@
+ #include <linux/of_gpio.h>
+ #include <linux/err.h>
+ #include <linux/of.h>
++#include <linux/pinctrl/consumer.h>
+ 
+ #include "../w1.h"
+ #include "../w1_int.h"
+@@ -78,8 +79,12 @@
+ 	struct w1_bus_master *master;
+ 	struct w1_gpio_platform_data *pdata;
+ 	int err;
++	struct pinctrl *pinctrl;
+ 
+ 	if (of_have_populated_dt()) {
++		pinctrl = devm_pinctrl_get_select_default(&pdev->dev);
++		if (IS_ERR(pinctrl))
++			dev_warn(&pdev->dev, "unable to select pin group\n");
+ 		err = w1_gpio_probe_dt(pdev);
+ 		if (err < 0) {
+ 			dev_err(&pdev->dev, "Failed to parse DT\n");
