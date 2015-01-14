@@ -71,6 +71,10 @@ if [ "$cape" == "capev2" ];then
  gpioExport 5     # up btn      - ACTIVE 1
  gpioExport 4     # down btn    - ACTIVE 1
  gpioExport 2     # RFM irq     - ACTIVE 1
+
+ gpioExport 20    # Encode SW
+ gpioExport 7     # Encode A
+ gpioExport 115   # Encode N
  log "Exported GPIO"
 
  # Print current State
@@ -80,8 +84,12 @@ if [ "$cape" == "capev2" ];then
  echo -n "] DOWN btn["
  gpioGetVal 4
  echo -n "] EnSW btn["
- #gpioGetVal 20
- echo -n "-] RFM irq["
+ gpioGetVal 20
+ echo -n "] EnA["
+ gpioGetVal 7
+ echo -n "] EnB["
+ gpioGetVal 115
+ echo -n "] RFM irq["
  gpioGetVal 2
  echo "]"
 
@@ -113,6 +121,10 @@ if [ "$cape" == "capev2" ];then
  i2cget -f -y 2 0x40 0x1
  i2cget -f -y 2 0x40 0x2
 
+ # w1 digital temp sensor
+ ls -l /sys/devices/w1_bus_master1/
+ grep ^ /sys/devices/w1_bus_master1/
+
  # add Dig temp and analog temp sensor output
 
  # add output of spitest tool to RFM
@@ -135,16 +147,16 @@ if [ "$cape" == "capev2" ];then
  gpioUnExport 5     # up btn
  gpioUnExport 4     # down btn
  gpioUnExport 2     # RFM irq
+ gpioUnExport 20    # Encode SW
+ gpioUnExport 7     # Encode A
+ gpioUnExport 115   # Encode N
  log "Restored GPIO"
 fi
 echo "----[Unit test finished]----"
 echo .
-echo "----[Steps to use WiFi]----"
-echo "1) Set mmc writeable   --->  rw"
-echo "2) vi /etc/wpa_supplicant.conf   # to have your network info"
-echo "3) vi /etc/init.d/S42wpa_supplicant   # uncomment udhcp line"
-echo "4) Set mmc readonly   --->  ro"
-echo "5) /etc/init.d/S42wpa_supplicant restart"
-echo "6) All power ups will auto connect"
+echo " To mount smb to access /tmp, on the host pc...."
+echo "   sudo mount -t cifs -o guest,rw,iocharset=utf8,file_mode=0777,dir_mode=0777  //192.168.7.2/tmp /mnt"
 echo .
+echo " Quick network setup..."
+echo "   sudo ifconfig eth1 192.168.7.1  ; ifconfig eth1"
 echo .
