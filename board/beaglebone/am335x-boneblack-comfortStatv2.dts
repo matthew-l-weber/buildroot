@@ -52,6 +52,10 @@
                     0x1ac 0x0f  /* led g     (out, mode 7) */
                     0x1a4 0x0f  /* led b     (out, mode 7) */
                     /* spi.... */
+                    0x190 0x33  /* sclk */
+                    0x194 0x33  /* d0 in */
+                    0x198 0x13  /* d1 out */
+                    0x19C 0x13  /* cs0 */
                     /* adc .... */
                  /*   0x1a8 0x0f*/  /* encode a  (in,  mode 7) */
                  /*   0x1b4 0x0f*/
@@ -80,12 +84,13 @@
                     0x150 0x2f  /* 22 - rfm_int    (in,  mode 7) */
                     /* spi.... */
                     /* adc .... */
-                    0x1a4 0x2f  /* 27 - encode b   (in , mode 1, eQEP0B) */
-                    /*0x1a4 0x31   27 - encode b   (in , mode 1, eQEP0B) */
-                    0x1a8 0x2f  /* 41 - encode sw  (in,  mode 7) */
-        /*            0x1b4 0x2f   defaulting to 0x3 - not used, set in safe input state */
-                  /*  0x1a0 0x31 defaulting to 0x37 -  42 - encode a   (in,  mode 1, eQEP0A) */
-                    0x164 0x2f  /* defaulting to 0x27 - not used, set in safe input state */
+
+                    /* eqep0 as GPIO */
+               /*     0x1a4 0x2f   27 - encode b   (in , mode 1, eQEP0B) */
+               /*     0x1a8 0x2f   41 - encode sw  (in,  mode 7) */
+               /**    0x1b4 0x2f   41(shared) - defaulting to 0x3 - not used, set in safe input state */
+               /**    0x1a0 0x31   42 - defaulting to 0x37 -  42 - encode a   (in,  mode 1, eQEP0A) */
+               /*     0x164 0x2f   42(shared) - defaulting to 0x27 - not used, set in safe input state */
 
                     0x17c 0x73  /* i2c2 scl */
                     0x178 0x73  /* i2c2 sda */
@@ -106,11 +111,11 @@
 	/* unused for now, done as a helper block of io */
 	eqep0_pins: eqep0_pins {
 		pinctrl-single,pins = <
-                    0x1a4 0x31  /* 27 - encode b   (in , mode 1, eQEP0B) */
-                    0x1a8 0x2f  /* 41 - encode sw  (in,  mode 7) */
-                    0x1b4 0x2f  /* not used, set in safe input state */
-                    0x1a0 0x31  /* 42 - encode a   (in,  mode 1, eQEP0A) */
-                    0x164 0x2f  /* not used, set in safe input state */
+                    0x1a4 0x29  /* 27 - encode b   (in , mode 1, eQEP0B) */
+                    0x1a8 0x2f  /* 41 - encode sw (btn)  (in,  mode 7) */
+                /*  0x1b4 0x2f     41(shared) - not used, set in safe input state */
+                    0x1a0 0x29  /* 42 - encode a   (in,  mode 1, eQEP0A) */
+                    0x164 0x2f  /* 42(shared) - not used, set in safe input state */
 		>;
 	};
 	w1_gpio_pins: w1_gpio_pinsw1_gpio_pins {
@@ -180,8 +185,8 @@
 
 /* v2 board only */
 &eqep0 {
-/*	pinctrl-names = "default";
-	pinctrl-0 = <&eqep0_pins>;*/
+	pinctrl-names = "default";
+	pinctrl-0 = <&eqep0_pins>;
 
 	count_mode = <0>; /* 0 - Quadrature mode, normal 90 phase offset cha & chb. */
 			  /* 1 - Direction mode. cha input = clock, chb input = direction */
@@ -190,5 +195,18 @@
 	invert_qb = <0>; /* Should we invert the channel B input? */
 	invert_qi = <0>; /* Should we invert the index input? */
 	invert_qs = <0>; /* Should we invert the strobe input? */
-/*	status = "okay";*/
+	status = "okay";
+};
+
+&spi1 {
+	#address-cells = <1>;
+	#size-cells = <0>;
+	status = "okay";
+	/* ti,pindir-d0-out-d1-in = <1>; FLIPS D0 AND D1 io*/
+	spidev@0 {
+		spi-max-frequency = <24000000>;
+		reg = <0>;
+		compatible = "linux,spidev";
+		/* Assuming mode 0 */
+	};
 };
