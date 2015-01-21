@@ -33,9 +33,10 @@ CYLINDERS=`echo $SIZE/255/63/512 | bc`
 echo CYLINDERS - $CYLINDERS
 
 {
-echo ,9,0x0C,*
-echo ,100,,-
-} | sfdisk -D -H 255 -S 63 -C $CYLINDERS $DRIVE
+echo ,100,0x0C,*
+echo ,200
+echo ,500
+} | sfdisk -uM -D -H 255 -S 63 -C $CYLINDERS $DRIVE
 
 sleep 0.5
 
@@ -54,10 +55,14 @@ fi
 if [ -b ${DRIVE}2 ]; then
 	umount ${DRIVE}2
 	mkfs.ext4 -L "rootfs" ${DRIVE}2
+	umount ${DRIVE}3
+	mkfs.ext4 -L "apps" ${DRIVE}3
 else
 	if [ -b ${DRIVE}p2 ]; then
 		umount ${DRIVE}p2
 		mkfs.ext4 -j -L "rootfs" ${DRIVE}p2
+		umount ${DRIVE}p3
+		mkfs.ext4 -j -L "apps" ${DRIVE}p3
 	else
 		echo "Cant find rootfs partition in /dev"
 	fi
