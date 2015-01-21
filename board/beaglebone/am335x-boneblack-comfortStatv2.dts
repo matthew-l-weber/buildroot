@@ -167,8 +167,6 @@
 };
 
 &tscadc {
-	vsense-name = "AIN1";
-        vsense-scale = <4096>;
 	status = "okay";
 
 	adc {
@@ -184,6 +182,10 @@
 };
 
 /* v2 board only */
+&epwmss0 {
+	status = "okay";
+};
+
 &eqep0 {
 	pinctrl-names = "default";
 	pinctrl-0 = <&eqep0_pins>;

@@ -1,0 +1,62 @@
+--- a/include/linux/iio/consumer.h	2014-10-09 08:46:37.000000000 -0500
++++ b/include/linux/iio/consumer.h	2015-01-21 12:13:40.200075323 -0600
+@@ -77,7 +77,7 @@
+  * fail.
+  */
+ struct iio_cb_buffer *iio_channel_get_all_cb(struct device *dev,
+-					     int (*cb)(u8 *data,
++					     int (*cb)(const void *data,
+ 						       void *private),
+ 					     void *private);
+ /**
+@@ -123,6 +123,19 @@
+ 			 int *val);
+
+ /**
++ * iio_read_channel_average_raw() - read from a given channel
++ * @chan:		The channel being queried.
++ * @val:		Value read back.
++ *
++ * Note raw reads from iio channels are in adc counts and hence
++ * scale will need to be applied if standard units required.
++ *
++ * In opposit to the normal iio_read_channel_raw this function
++ * returns the average of multiple reads.
++ */
++int iio_read_channel_average_raw(struct iio_channel *chan, int *val);
++
++/**
+  * iio_read_channel_processed() - read processed value from a given channel
+  * @chan:		The channel being queried.
+  * @val:		Value read back.
+--- a/include/linux/iio/trigger.h	2014-10-09 08:46:37.000000000 -0500
++++ b/include/linux/iio/trigger.h	2015-01-21 12:13:47.776075042 -0600
+@@ -84,10 +84,12 @@
+ 	put_device(&trig->dev);
+ }
+
+-static inline void iio_trigger_get(struct iio_trigger *trig)
++static inline struct iio_trigger *iio_trigger_get(struct iio_trigger *trig)
+ {
+ 	get_device(&trig->dev);
+ 	__module_get(trig->ops->owner);
++
++	return trig;
+ }
+
+ /**
+@@ -129,12 +131,11 @@
+ /**
+  * iio_trigger_poll() - called on a trigger occurring
+  * @trig:	trigger which occurred
+- * @time:	timestamp when trigger occurred
+  *
+  * Typically called in relevant hardware interrupt handler.
+  **/
+-void iio_trigger_poll(struct iio_trigger *trig, s64 time);
+-void iio_trigger_poll_chained(struct iio_trigger *trig, s64 time);
++void iio_trigger_poll(struct iio_trigger *trig);
++void iio_trigger_poll_chained(struct iio_trigger *trig);
+
+ irqreturn_t iio_trigger_generic_data_rdy_poll(int irq, void *private);
+
