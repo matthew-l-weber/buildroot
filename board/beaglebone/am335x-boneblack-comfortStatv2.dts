@@ -123,6 +123,14 @@
                     0x04c 0x3F  /* P9-16 - NO OMAP_PIN_INPUT_PULLUP | OMAP_MUX_MODE7 */
 		>;
 	};
+	spi1_pins: spi1_pins {
+		pinctrl-single,pins = <
+                    0x190 0x33 /* P9_31 = spi1_sclk, INPUT_PULLUP | MODE3 */
+                    0x194 0x33 /* P9_29 = spi1_d0, INPUT_PULLUP | MODE3 */
+                    0x198 0x13 /* P9_30 = spi1_d1, OUTPUT_PULLUP | MODE3 */
+                    0x19c 0x13 /* P9_28 = spi1_cs0, OUTPUT_PULLUP | MODE3 */
+		>;
+	};
 };
 
 &ocp { /* does the ocp in the bone common file need ot be a reference to the dtsi ocp?????? trying to explain can't parse error.... */
@@ -204,8 +212,10 @@
 	#address-cells = <1>;
 	#size-cells = <0>;
 	status = "okay";
-	/* ti,pindir-d0-out-d1-in = <1>; FLIPS D0 AND D1 io*/
-	spidev@0 {
+	pinctrl-names = "default";
+	pinctrl-0 = <&spi1_pins>;
+	ti,pindir-d0-out-d1-in = <1>; /* FLIPS D0 AND D1 io*/
+	spidev@1 {
 		spi-max-frequency = <24000000>;
 		reg = <0>;
 		compatible = "linux,spidev";
