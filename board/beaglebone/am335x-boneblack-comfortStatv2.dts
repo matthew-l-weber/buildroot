@@ -164,7 +164,7 @@
 	/* temp and humidity sensor */
 	/* v2 board only */
 	si7020@40 {
-	      compatible = "si7020,si7020";
+	      compatible = "si7020";
 	      reg = <0x40>;
 	};
 	/* eeprom */
