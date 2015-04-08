@@ -1,7 +1,7 @@
 config BR2_PACKAGE_CUPS
 	bool "cups"
-	# serious security issues, needs upgrading
-	depends on BR2_DEPRECATED_SINCE_2015_05
+	# needs libstdcpp for ppdc
+	depends on BR2_INSTALL_LIBSTDCPP
 	# needs fork()
 	depends on BR2_USE_MMU
 	help
@@ -13,11 +13,16 @@ if BR2_PACKAGE_CUPS
 
 config BR2_PACKAGE_CUPS_PDFTOPS
 	bool "pdftops support"
-	depends on BR2_INSTALL_LIBSTDCPP
-	help
-	  Enable pdftops support
+	depends on BR2_DEPRECATED_SINCE_2015_05
 
-comment "pdftops support needs a toolchain w/ C++"
-	depends on !BR2_INSTALL_LIBSTDCPP
+config BR2_PACKAGE_CUPS_AVAHI
+	bool "avahi support"
+	depends on !BR2_STATIC_LIBS # avahi
+	depends on !BR2_TOOLCHAIN_HAS_THREADS # avahi
+	select BR2_PACKAGE_AVAHI
+	select BR2_PACKAGE_AVAHI_DAEMON
+	help
+	  Enable Avahi support.
+	  Select this if you want cups to support Bonjour protocol.
 
 endif
