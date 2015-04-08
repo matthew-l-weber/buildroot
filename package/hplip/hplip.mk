@@ -4,7 +4,7 @@
 #
 ################################################################################
 
-HPLIP_VERSION = 3.13.10
+HPLIP_VERSION = 3.15.2
 HPLIP_SITE = http://downloads.sourceforge.net/hplip/hplip
 HPLIP_AUTORECONF = YES
 HPLIP_DEPENDENCIES = cups libusb jpeg
@@ -28,6 +28,8 @@ HPLIP_CONF_OPTS = \
 	--enable-lite-build \
 	--with-sysroot=$(STAGING_DIR) \
 	--includedir=$(STAGING_DIR)/usr/include
+
+HPLIP_MAKE_OPTS += LDFLAGS+=-lpthread
 
 ifeq ($(BR2_PACKAGE_DBUS),y)
 HPLIP_CONF_OPTS += --enable-dbus-build
