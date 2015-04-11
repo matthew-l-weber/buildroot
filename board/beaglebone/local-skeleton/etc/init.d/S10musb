@@ -1,5 +1,7 @@
 #!/bin/sh
 
+modprobe musb_dsps
+modprobe musb_am335x
 #modprobe g_acm_ms file=/dev/mmcblk0
 #modprobe g_multi file=/dev/mmcblk0
 modprobe g_ether host_addr=00:dc:c8:f7:75:05 dev_addr=00:dd:dc:eb:6d:f1

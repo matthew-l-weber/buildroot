@@ -27,14 +27,15 @@ mkdir /mnt/sdcard2
 mount ${DRIVE}1 /mnt/sdcard1
 cp MLO                   /mnt/sdcard1
 cp u-boot.img            /mnt/sdcard1
-rsync -lptD   zImage        /mnt/sdcard1/zImage
+[ -e "/mnt/sdcard1/zImage" ] && rm -f zImage /mnt/sdcard1
+rsync -lptD   uImage        /mnt/sdcard1/uImage
 # set default to v2 config for now
 cp am335x-boneblack-comfortStatv2.dtb  /mnt/sdcard1/am335x-boneblack.dtb
 cp am335x-boneblack-comfortStatv1.dtb  /mnt/sdcard1
 cp am335x-boneblack-comfortStatv2.dtb  /mnt/sdcard1
 cp uEnv.txt              /mnt/sdcard1
 sync
-umount ${DRIVE}1 
+umount ${DRIVE}1
 [ -d "/mnt/sdcard1" ] && rm -fr /mnt/sdcard1
 
 mount ${DRIVE}2 /mnt/sdcard2
