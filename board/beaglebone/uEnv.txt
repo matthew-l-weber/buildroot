@@ -1,4 +1,5 @@
 bootpart=0:1
 bootdir=
-mmcrootfstype=ext4 rootwait
-uenvcmd=run loaduimage;run loadramdisk;run findfdt;run loadfdt;run ramboot
+bootfile=uImage
+bootargs=console=ttyO0,115200n8 root=/dev/mmcblk0p2 ro rootfstype=ext4 rootwait
+uenvcmd=run loadimage;run loadfdt;bootm 0x80200000 - 0x80F80000
