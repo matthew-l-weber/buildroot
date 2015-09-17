@@ -1,0 +1,57 @@
+config BR2_PACKAGE_CUPS_FILTERS
+	bool "cups-filters"
+	depends on BR2_PACKAGE_CUPS
+	select BR2_PACKAGE_LIBGLIB2
+	select BR2_PACKAGE_IJS
+	select BR2_PACKAGE_LCMS2
+	select BR2_PACKAGE_POPPLER
+	select BR2_PACKAGE_QPDF
+	# needs fork()
+	depends on BR2_USE_MMU
+	depends on BR2_PACKAGE_LIBGLIB2
+	depends on BR2_PACKAGE_IJS
+	depends on BR2_PACKAGE_LCMS2
+	depends on BR2_PACKAGE_POPPLER
+	depends on BR2_PACKAGE_QPDF
+	help
+	  This project provides backends, filters, and other software that was
+	  once part of the core CUPS distribution but is no longer maintained
+	  by Apple Inc. In addition it contains additional filters and software
+	  developed independently of Apple, especially filters for the PDF-
+	  centric printing workflow introduced by OpenPrinting and a daemon
+	  to browse Bonjour broadcasts of remote CUPS printers to make these
+	  printers available locally and to provide backward compatibility to
+	  the old CUPS broadcasting and browsing of CUPS 1.5.x and older.
+	  From CUPS 1.6.0 on, this package is required for using printer drivers
+	  with CUPS under Linux. With CUPS 1.5.x and earlier this package can be
+	  used optionally to switch over to PDF-based printing.
+
+	  http://www.linuxfoundation.org/collaborate/workgroups/openprinting/cups-filters
+
+comment "cups-filters depends on libglib2"
+	depends on !BR2_PACKAGE_LIBGLIB2
+
+comment "cups-filters depends on ijs"
+	depends on !BR2_PACKAGE_IJS
+
+comment "cups-filters depends on lcms2"
+	depends on !BR2_PACKAGE_LCMS2
+
+comment "cups-filters depends on poppler"
+	depends on !BR2_PACKAGE_POPPLER
+
+comment "cups-filters depends on qpdf"
+	depends on !BR2_PACKAGE_QPDF
+
+if BR2_PACKAGE_CUPS_FILTERS
+
+config BR2_PACKAGE_CUPS_FILTERS_PDFTOPS
+	bool "pdftops support"
+	depends on BR2_INSTALL_LIBSTDCPP
+	help
+	  Enable pdftops support
+
+comment "pdftops support needs a toolchain w/ C++"
+	depends on !BR2_INSTALL_LIBSTDCPP
+
+endif

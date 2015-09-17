@@ -334,6 +334,7 @@ config BR2_PACKAGE_FREERDP_CLIENT
 
 config BR2_PACKAGE_CUPS_PDFTOPS
 	bool "Pdftops support has been removed from Cups"
+	select BR2_PACKAGE_CUPS_FILTERS_PDFTOPS
 	select BR2_LEGACY
 	help
 	  Pdftops support has been removed from the cups package
