@@ -1,0 +1,30 @@
+From a863814f6dadda054c964897210789eafff6f605 Mon Sep 17 00:00:00 2001
+From: Olivier Schonken <olivier.schonken@gmail.com>
+Date: Wed, 18 Mar 2015 20:33:41 +0200
+Subject: [PATCH] Do not use genstrings
+
+Using cross compiled genstrings while cross-compiling will break compilation.
+Genstrings is still compiled because some power users might want to do ppd
+compilation on their target machine, and for that they would need to use the
+native compiled genstrings binary, to generate a sample.c file for their target
+
+Signed-off-by: Olivier Schonken <olivier.schonken@gmail.com>
+---
+ ppdc/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/ppdc/Makefile b/ppdc/Makefile
+index bc8bb64..f6bae25 100644
+--- a/ppdc/Makefile
++++ b/ppdc/Makefile
+@@ -243,7 +243,7 @@ genstrings:		genstrings.o libcupsppdc.a ../cups/$(LIBCUPSSTATIC) \
+		libcupsppdc.a ../cups/$(LIBCUPSSTATIC) $(LIBGSSAPI) $(SSLLIBS) \
+		$(DNSSDLIBS) $(COMMONLIBS) $(LIBZ)
+	echo Generating localization strings...
+-	./genstrings >sample.c
++	#./genstrings >sample.c
+
+
+ #
+--
+1.9.1

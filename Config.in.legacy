@@ -332,6 +332,13 @@ config BR2_PACKAGE_FREERDP_CLIENT
 	select BR2_LEGACY
 	select BR2_PACKAGE_FREERDP_CLIENT_X11
 
+config BR2_PACKAGE_CUPS_PDFTOPS
+	bool "Pdftops support has been removed from Cups"
+	select BR2_LEGACY
+	help
+	  Pdftops support has been removed from the cups package
+	  It is now part of the cups-filters package.
+
 config BR2_PACKAGE_BLACKBOX
 	bool "blackbox package has been removed"
 	select BR2_LEGACY

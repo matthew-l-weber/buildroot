@@ -1,0 +1,27 @@
+From da960a1384625d2550ffbf5765a10fe9b3aa5a51 Mon Sep 17 00:00:00 2001
+From: Olivier Schonken <olivier.schonken@gmail.com>
+Date: Wed, 18 Mar 2015 20:30:39 +0200
+Subject: [PATCH] Remove building html from man makefile
+
+Building and using mantohtml causes problems for cross-compiling
+
+Signed-off-by: Olivier Schonken <olivier.schonken@gmail.com>
+---
+ man/Makefile | 2 +-
+ 1 file changed, 1 insertion(+), 1 deletion(-)
+
+diff --git a/man/Makefile b/man/Makefile
+index dc1a8c0..0ad42a1 100644
+--- a/man/Makefile
++++ b/man/Makefile
+@@ -73,7 +73,7 @@ MAN8	=	cupsaccept.$(MAN8EXT) \
+ # Make everything...
+ #
+
+-all:	$(MAN1) $(MAN5) $(MAN7) $(MAN8) html
++all:	$(MAN1) $(MAN5) $(MAN7) $(MAN8)
+
+
+ #
+--
+1.9.1
