@@ -1,0 +1,7 @@
+config BR2_PACKAGE_PYTHON_PYCUPS
+	bool "python-pycups"
+	depends on BR2_PACKAGE_PYTHON
+	help
+	  This is a set of Python bindings for the libcups library.
+
+	  http://cyberelk.net/tim/software/pycups/
