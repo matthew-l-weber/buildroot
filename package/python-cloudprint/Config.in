@@ -2,8 +2,12 @@ config BR2_PACKAGE_PYTHON_CLOUDPRINT
 	bool "python-cloudprint"
 	depends on BR2_PACKAGE_PYTHON
 	select BR2_PACKAGE_CUPS
+	#  there are a bunch more, filters, depends for filters, etc
 	select BR2_PACKAGE_PYTHON_PYCUPS
 	select BR2_PACKAGE_PYTHON_DAEMON
+	select BR2_PACKAGE_PYTHON_REQUESTS
+	select BR2_PACKAGE_PYTHON_SETUPTOOLS
+	select BR2_PACKAGE_PYTHON_ARGPARSE
 	help
 	  This software is a python implementation of a
 	  cloud print connector. Unlike Google's linux
