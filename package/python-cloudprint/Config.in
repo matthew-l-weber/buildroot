@@ -1,0 +1,13 @@
+config BR2_PACKAGE_PYTHON_CLOUDPRINT
+	bool "python-cloudprint"
+	depends on BR2_PACKAGE_PYTHON
+	select BR2_PACKAGE_CUPS
+	select BR2_PACKAGE_PYTHON_PYCUPS
+	select BR2_PACKAGE_PYTHON_DAEMON
+	help
+	  This software is a python implementation of a
+	  cloud print connector. Unlike Google's linux
+	  connector, it does not require chrome to be
+	  installed on the server.
+
+	  https://github.com/armooo/cloudprint
