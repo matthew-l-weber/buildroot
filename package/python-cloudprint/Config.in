@@ -15,3 +15,12 @@ config BR2_PACKAGE_PYTHON_CLOUDPRINT
 	  installed on the server.
 
 	  https://github.com/armooo/cloudprint
+
+comment "python-cloudprint depends on python"
+        depends on !BR2_PACKAGE_PYTHON
+
+comment "python-cloudprint depends on cups"
+        depends on !BR2_PACKAGE_CUPS
+
+comment "python-cloudprint depends on cups-filter"
+        depends on !BR2_PACKAGE_CUPS_FILTERS
