@@ -5,7 +5,7 @@
 ################################################################################
 
 CUPS_FILTERS_VERSION = 1.0.74
-CUPS_FILTERS_SITE = http://openprinting.org/download/cups-filters/
+CUPS_FILTERS_SITE = http://openprinting.org/download/cups-filters
 CUPS_FILTERS_LICENSE = GPLv2+
 CUPS_FILTERS_LICENSE_FILES = COPYING
 
