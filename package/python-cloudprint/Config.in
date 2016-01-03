@@ -1,8 +1,8 @@
 config BR2_PACKAGE_PYTHON_CLOUDPRINT
 	bool "python-cloudprint"
 	depends on BR2_PACKAGE_PYTHON
-	select BR2_PACKAGE_CUPS
-	#  there are a bunch more, filters, depends for filters, etc
+	depends on BR2_PACKAGE_CUPS
+	depends on BR2_PACKAGE_CUPS_FILTERS
 	select BR2_PACKAGE_PYTHON_PYCUPS
 	select BR2_PACKAGE_PYTHON_DAEMON
 	select BR2_PACKAGE_PYTHON_REQUESTS
