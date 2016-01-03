@@ -8,11 +8,6 @@ config BR2_PACKAGE_CUPS_FILTERS
 	select BR2_PACKAGE_QPDF
 	# needs fork()
 	depends on BR2_USE_MMU
-	depends on BR2_PACKAGE_LIBGLIB2
-	depends on BR2_PACKAGE_IJS
-	depends on BR2_PACKAGE_LCMS2
-	depends on BR2_PACKAGE_POPPLER
-	depends on BR2_PACKAGE_QPDF
 	help
 	  This project provides backends, filters, and other software that was
 	  once part of the core CUPS distribution but is no longer maintained
@@ -28,20 +23,8 @@ config BR2_PACKAGE_CUPS_FILTERS
 
 	  http://www.linuxfoundation.org/collaborate/workgroups/openprinting/cups-filters
 
-comment "cups-filters depends on libglib2"
-	depends on !BR2_PACKAGE_LIBGLIB2
-
-comment "cups-filters depends on ijs"
-	depends on !BR2_PACKAGE_IJS
-
-comment "cups-filters depends on lcms2"
-	depends on !BR2_PACKAGE_LCMS2
-
-comment "cups-filters depends on poppler"
-	depends on !BR2_PACKAGE_POPPLER
-
-comment "cups-filters depends on qpdf"
-	depends on !BR2_PACKAGE_QPDF
+comment "cups-filters depends on cups"
+	depends on !BR2_PACKAGE_CUPS
 
 if BR2_PACKAGE_CUPS_FILTERS
 
